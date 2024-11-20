@@ -45,32 +45,40 @@ export default function EcommerceCard({
   return (
     <div className="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
       <div className="flex items-center justify-center h-64 p-4 overflow-hidden rounded-t-lg">
-        <img className="object-cover w-full" src={image} alt="product image" />
+        <img
+          className="object-contain w-full h-full"
+          src={image}
+          alt="product image"
+        />
       </div>
-      <div className="px-5 pb-5">
-        <a href="#">
-          <h5 className="text-xl font-semibold tracking-tight text-gray-900 line-clamp-2 dark:text-white">
-            {productName}
-          </h5>
-        </a>
-        <div className="flex items-center mt-2.5 mb-5">
-          <div className="flex items-center space-x-1 rtl:space-x-reverse">
-            {ratingElement}
+      <div className="px-5 pb-5 ">
+        <div className="flex flex-col justify-between h-36">
+          <div className="">
+            <a href="#">
+              <h5 className="text-xl font-semibold tracking-tight text-gray-900 line-clamp-2 dark:text-white">
+                {productName}
+              </h5>
+            </a>
+            <div className="flex items-center mt-2.5 mb-5">
+              <div className="flex items-center space-x-1 rtl:space-x-reverse">
+                {ratingElement}
+              </div>
+              <span className="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ms-3">
+                {rating}
+              </span>
+            </div>
           </div>
-          <span className="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ms-3">
-            {rating}.0
-          </span>
-        </div>
-        <div className="flex items-center justify-between">
-          <span className="text-3xl font-bold text-gray-900 dark:text-white">
-            ${price.toLocaleString("en-US")}
-          </span>
-          <button
-            onClick={handleAddToCart}
-            className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-          >
-            Add to cart
-          </button>
+          <div className="flex items-center justify-between">
+            <span className="text-3xl font-bold text-gray-900 dark:text-white">
+              ${price.toLocaleString("en-US")}
+            </span>
+            <button
+              onClick={handleAddToCart}
+              className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            >
+              Add to cart
+            </button>
+          </div>
         </div>
       </div>
     </div>

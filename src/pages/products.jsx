@@ -1,13 +1,19 @@
 import { useState, useEffect } from "react";
-import { products } from "../utils/data";
 import EcommerceCard from "../components/Cards/EcommerceCard";
 import PageLayout from "../layouts/PageLayout";
 import Cart from "../components/Cart/Cart";
+import { getProducts } from "../services/products.service";
 
 export default function ProductPage() {
   const [cart, setCart] = useState(
     localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart")) : []
   );
+
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    getProducts().then((data) => setProducts(data));
+  }, []);
 
   useEffect(() => {
     localStorage.setItem("cart", JSON.stringify(cart));
@@ -56,20 +62,23 @@ export default function ProductPage() {
 
   return (
     <PageLayout>
-      <div className="flex">
-        <div className="grid grid-cols-3 gap-3">
-          {products.map((product) => (
-            <EcommerceCard
-              key={product.id}
-              productName={product.productName}
-              image={product.image}
-              price={product.price}
-              rating={product.rating}
-              handleAddToCart={() => handleAddToCart(product)}
-            />
-          ))}
+      <h1 className="w-9/12 mb-4 text-3xl font-bold text-center ">Products</h1>
+      <div className="flex gap-x-2">
+        <div className="w-9/12">
+          <div className="grid grid-cols-3 gap-3">
+            {products.map((product) => (
+              <EcommerceCard
+                key={product.id}
+                productName={product.title}
+                image={product.image}
+                price={product.price}
+                rating={product.rating.rate}
+                handleAddToCart={() => handleAddToCart(product)}
+              />
+            ))}
+          </div>
         </div>
-        <div className="px-3 w-96">
+        <div className="w-3/12 px-3">
           <Cart
             cart={cart}
             handleAddQuantity={handleAddQuantity}
