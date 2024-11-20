@@ -6,7 +6,17 @@ import { Link } from "react-router-dom";
 export default function FormLogin() {
   return (
     <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-      <form action="#" method="POST" className="space-y-6">
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          localStorage.setItem("isAuthenticated", true);
+          localStorage.setItem("user", e.target.email.value);
+          localStorage.setItem("password", e.target.password.value);
+          window.location.href = "/products";
+        }}
+        method="POST"
+        className="space-y-6"
+      >
         <EmailInput />
         <PasswordInput forgotPassword={true} />
 

@@ -1,14 +1,17 @@
 export default function EcommerceCard({
   productName,
-  price,
+  price = 0,
   image,
   rating = 5,
+  handleAddToCart,
 }) {
   const ratingElement = [];
   let i = 0;
+  let ratingElementKey = 0;
   while (i < rating) {
     ratingElement.push(
       <svg
+        key={ratingElementKey}
         className="w-4 h-4 text-yellow-300"
         aria-hidden="true"
         xmlns="http://www.w3.org/2000/svg"
@@ -19,11 +22,13 @@ export default function EcommerceCard({
       </svg>
     );
     i++;
+    ratingElementKey++;
   }
   i = 0;
   while (i < 5 - rating) {
     ratingElement.push(
       <svg
+        key={ratingElementKey}
         className="w-4 h-4 text-gray-200 dark:text-gray-600"
         aria-hidden="true"
         xmlns="http://www.w3.org/2000/svg"
@@ -34,6 +39,7 @@ export default function EcommerceCard({
       </svg>
     );
     i++;
+    ratingElementKey++;
   }
 
   return (
@@ -57,14 +63,14 @@ export default function EcommerceCard({
         </div>
         <div className="flex items-center justify-between">
           <span className="text-3xl font-bold text-gray-900 dark:text-white">
-            ${price}
+            ${price.toLocaleString("en-US")}
           </span>
-          <a
-            href="#"
+          <button
+            onClick={handleAddToCart}
             className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
           >
             Add to cart
-          </a>
+          </button>
         </div>
       </div>
     </div>

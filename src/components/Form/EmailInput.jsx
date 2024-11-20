@@ -1,4 +1,4 @@
-export default function EmailInput() {
+export default function EmailInput({ id = "email", name = "email" }) {
   return (
     <div>
       <label
@@ -9,8 +9,8 @@ export default function EmailInput() {
       </label>
       <div className="mt-2">
         <input
-          id="email"
-          name="email"
+          id={id}
+          name={name}
           type="email"
           required
           autoComplete="email"
