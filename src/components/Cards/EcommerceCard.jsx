@@ -1,8 +1,11 @@
+import { Link } from "react-router-dom";
+
 export default function EcommerceCard({
+  id,
   productName,
   price = 0,
   image,
-  rating = 5,
+  rating = 0,
   handleAddToCart,
 }) {
   const ratingElement = [];
@@ -44,21 +47,23 @@ export default function EcommerceCard({
 
   return (
     <div className="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-      <div className="flex items-center justify-center h-64 p-4 overflow-hidden rounded-t-lg">
-        <img
-          className="object-contain w-full h-full"
-          src={image}
-          alt="product image"
-        />
-      </div>
+      <Link to={`/product/${id}`}>
+        <div className="flex items-center justify-center h-64 p-4 overflow-hidden rounded-t-lg">
+          <img
+            className="object-contain w-full h-full"
+            src={image}
+            alt="product image"
+          />
+        </div>
+      </Link>
       <div className="px-5 pb-5 ">
         <div className="flex flex-col justify-between h-36">
           <div className="">
-            <a href="#">
+            <Link to={`/product/${id}`}>
               <h5 className="text-xl font-semibold tracking-tight text-gray-900 line-clamp-2 dark:text-white">
                 {productName}
               </h5>
-            </a>
+            </Link>
             <div className="flex items-center mt-2.5 mb-5">
               <div className="flex items-center space-x-1 rtl:space-x-reverse">
                 {ratingElement}

@@ -1,27 +1,46 @@
+import { useState } from "react";
 import ButtonForm from "../components/Form/ButtonForm";
-import EmailInput from "../components/Form/EmailInput";
 import PasswordInput from "../components/Form/PasswordInput";
+import TextInput from "../components/Form/TextInput";
 import { Link } from "react-router-dom";
+import { login } from "../services/auth.service";
 
 export default function FormLogin() {
+  const [failedMessage, setFailedMessage] = useState("");
+
   return (
     <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          localStorage.setItem("isAuthenticated", true);
-          localStorage.setItem("user", e.target.email.value);
-          localStorage.setItem("password", e.target.password.value);
-          window.location.href = "/products";
+          login(
+            {
+              username: e.target.username.value,
+              password: e.target.password.value,
+            },
+            (success, response) => {
+              if (success) {
+                localStorage.setItem("token", response.data.token);
+                window.location.href = "/products";
+              } else {
+                setFailedMessage(response.response.data);
+              }
+            }
+          );
         }}
         method="POST"
         className="space-y-6"
       >
-        <EmailInput />
-        <PasswordInput forgotPassword={true} />
+        <TextInput id="username" name="username" />
+        <PasswordInput id="password" name="password" forgotPassword={true} />
 
         <ButtonForm>Sign in</ButtonForm>
       </form>
+      {failedMessage && (
+        <p className="mt-5 text-center text-red-500 text-sm/6">
+          {failedMessage}
+        </p>
+      )}
 
       <p className="mt-10 text-center text-gray-500 text-sm/6">
         Not a member?{" "}

@@ -1,12 +1,11 @@
 import { Link } from "react-router-dom";
 import { LogOut } from "lucide-react";
 import Button from "../Button/Button";
+import { getUsername } from "../../services/auth.service";
 
 export default function Navbar() {
   function handleLogOut() {
-    localStorage.setItem("isAuthenticated", false);
-    localStorage.removeItem("user");
-    localStorage.removeItem("password");
+    localStorage.removeItem("token");
     window.location.href = "/login";
   }
   return (
@@ -51,10 +50,10 @@ export default function Navbar() {
         </div>
 
         <div className="flex items-center gap-x-4">
-          {localStorage.getItem("isAuthenticated") === "true" ? (
+          {localStorage.getItem("token") ? (
             <>
               <p className="px-6 py-2 font-bold bg-blue-100 rounded-full">
-                {localStorage.getItem("user")}
+                {getUsername()}
               </p>
               <div className="flex items-center">
                 <button

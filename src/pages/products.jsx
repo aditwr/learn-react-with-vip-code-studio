@@ -69,6 +69,7 @@ export default function ProductPage() {
             {products.map((product) => (
               <EcommerceCard
                 key={product.id}
+                id={product.id}
                 productName={product.title}
                 image={product.image}
                 price={product.price}
