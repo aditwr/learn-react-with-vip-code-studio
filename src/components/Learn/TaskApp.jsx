@@ -116,10 +116,7 @@ export function TaksList({ tasks = [], onDeleteTask, onChangeTask }) {
   const [editTaskId, setEditTaskId] = useState(null);
   const [editTaskText, setEditTaskText] = useState("");
 
-  useEffect(() => {
-    console.log("editTaskId : ", editTaskId);
-    console.log("editTaskText : ", editTaskText);
-  }, [editTaskId, editTaskText]);
+  useEffect(() => {}, [editTaskId, editTaskText]);
 
   return (
     <ul className="mt-4">

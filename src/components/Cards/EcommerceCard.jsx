@@ -1,17 +1,39 @@
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../../store/slices/cartSlices";
+import PropTypes from "prop-types";
+
+EcommerceCard.propTypes = {
+  id: PropTypes.number.isRequired,
+  title: PropTypes.string.isRequired,
+  category: PropTypes.string,
+  description: PropTypes.string,
+  price: PropTypes.number,
+  image: PropTypes.string,
+  rating: PropTypes.shape({
+    rate: PropTypes.number,
+    count: PropTypes.number,
+  }),
+};
 
 export default function EcommerceCard({
   id,
-  productName,
+  title,
+  category,
+  description,
   price = 0,
   image,
-  rating = 0,
-  handleAddToCart,
+  rating = {
+    rate: 0,
+    count: 0,
+  },
 }) {
   const ratingElement = [];
   let i = 0;
   let ratingElementKey = 0;
-  while (i < rating) {
+  const dispatch = useDispatch();
+
+  while (i < rating.rate) {
     ratingElement.push(
       <svg
         key={ratingElementKey}
@@ -28,7 +50,7 @@ export default function EcommerceCard({
     ratingElementKey++;
   }
   i = 0;
-  while (i < 5 - rating) {
+  while (i < 5 - rating.rate) {
     ratingElement.push(
       <svg
         key={ratingElementKey}
@@ -61,7 +83,8 @@ export default function EcommerceCard({
           <div className="">
             <Link to={`/product/${id}`}>
               <h5 className="text-xl font-semibold tracking-tight text-gray-900 line-clamp-2 dark:text-white">
-                {productName}
+                {title}
+                category, description,
               </h5>
             </Link>
             <div className="flex items-center mt-2.5 mb-5">
@@ -69,7 +92,7 @@ export default function EcommerceCard({
                 {ratingElement}
               </div>
               <span className="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ms-3">
-                {rating}
+                {rating.rate}
               </span>
             </div>
           </div>
@@ -78,7 +101,19 @@ export default function EcommerceCard({
               ${price.toLocaleString("en-US")}
             </span>
             <button
-              onClick={handleAddToCart}
+              onClick={() =>
+                dispatch(
+                  addToCart({
+                    id,
+                    title,
+                    category,
+                    description,
+                    price,
+                    image,
+                    rating,
+                  })
+                )
+              }
               className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
             >
               Add to cart

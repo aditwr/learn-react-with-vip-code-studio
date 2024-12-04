@@ -1,12 +1,15 @@
 import { ShoppingCart } from "lucide-react";
 import { CirclePlus, CircleMinus } from "lucide-react";
-import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import {
+  increaseQuantity,
+  decreaseQuantity,
+} from "../../store/slices/cartSlices";
+import { useSelector } from "react-redux";
 
-export default function Cart({
-  cart = [],
-  handleAddQuantity,
-  handleRemoveQuantity,
-}) {
+export default function Cart() {
+  const cart = useSelector((state) => state.cart);
+  const dispatch = useDispatch();
   return (
     <div className="w-full p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
       <div className="flex items-center justify-between mb-4">
@@ -46,7 +49,7 @@ export default function Cart({
                     </div>
                     <div className="flex-1 min-w-0 ms-4">
                       <p className="w-10/12 text-sm font-medium text-gray-900 truncate dark:text-white">
-                        {product.productName}
+                        {product.title}
                       </p>
                       <div className="flex gap-x-2">
                         <p className="text-sm font-semibold text-neutral-600">
@@ -72,13 +75,17 @@ export default function Cart({
                     </div>
                     <div className="flex flex-col ml-4 gap-y-1">
                       <button
-                        onClick={() => handleAddQuantity(product)}
+                        onClick={() =>
+                          dispatch(increaseQuantity({ ...product }))
+                        }
                         className="text-sm font-medium text-blue-600 hover:underline dark:text-blue-500 active:bg-blue-600 active:rounded-full active:text-white"
                       >
                         <CirclePlus size={20} />
                       </button>
                       <button
-                        onClick={() => handleRemoveQuantity(product)}
+                        onClick={() =>
+                          dispatch(decreaseQuantity({ ...product }))
+                        }
                         className="text-sm font-medium text-blue-600 hover:underline dark:text-blue-500 active:bg-blue-600 active:rounded-full active:text-white"
                       >
                         <CircleMinus size={20} />

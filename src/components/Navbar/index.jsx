@@ -2,8 +2,15 @@ import { Link } from "react-router-dom";
 import { LogOut } from "lucide-react";
 import Button from "../Button/Button";
 import { getUsername } from "../../services/auth.service";
+import { useSelector } from "react-redux";
+import { useEffect } from "react";
+import { ShoppingCart } from "lucide-react";
 
 export default function Navbar() {
+  const cart = useSelector((state) => state.cart);
+
+  useEffect(() => {}, [cart]);
+
   function handleLogOut() {
     localStorage.removeItem("token");
     window.location.href = "/login";
@@ -66,6 +73,17 @@ export default function Navbar() {
             </>
           ) : (
             <>
+              <div className="">
+                {/* shopping cart icon */}
+                <Link to={"/products"}>
+                  <div className="relative p-3 rounded-sm bg-slate-100">
+                    <ShoppingCart size={16} />
+                    <span className="absolute flex items-center justify-center w-5 h-5 text-xs font-medium text-white bg-red-600 rounded-full -top-1 -right-1">
+                      {cart.length}
+                    </span>
+                  </div>
+                </Link>
+              </div>
               <Link to={"/login"}>
                 <Button type="secondary">Login</Button>
               </Link>
