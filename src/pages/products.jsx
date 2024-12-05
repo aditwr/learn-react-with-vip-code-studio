@@ -1,10 +1,8 @@
-import { useState, useEffect, createContext } from "react";
+import { useState, useEffect } from "react";
 import EcommerceCard from "../components/Cards/EcommerceCard";
 import PageLayout from "../layouts/PageLayout";
 import Cart from "../components/Cart/Cart";
 import { getProducts } from "../services/products.service";
-
-const ThemeContext = createContext(null);
 
 export default function ProductPage() {
   const [products, setProducts] = useState([]);
@@ -33,11 +31,9 @@ export default function ProductPage() {
             ))}
           </div>
         </div>
-        <ThemeContext.Provider value={"dark"}>
-          <div className="w-3/12 px-3">
-            <Cart />
-          </div>
-        </ThemeContext.Provider>
+        <div className="w-3/12 px-3">
+          <Cart />
+        </div>
       </div>
     </PageLayout>
   );

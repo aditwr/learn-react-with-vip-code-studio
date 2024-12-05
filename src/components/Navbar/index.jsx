@@ -3,11 +3,14 @@ import { LogOut } from "lucide-react";
 import Button from "../Button/Button";
 import { getUsername } from "../../services/auth.service";
 import { useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useContext } from "react";
+import { ThemeContext } from "../../context/ThemeContext";
 import { ShoppingCart } from "lucide-react";
+import { Sun, Moon } from "lucide-react";
 
 export default function Navbar() {
   const cart = useSelector((state) => state.cart);
+  const { theme, setTheme } = useContext(ThemeContext);
 
   useEffect(() => {}, [cart]);
 
@@ -83,6 +86,19 @@ export default function Navbar() {
                     </span>
                   </div>
                 </Link>
+              </div>
+              <div className="">
+                {/* toggle theme icon */}
+                <button
+                  onClick={() =>
+                    setTheme((theme) => {
+                      return theme === "light" ? "dark" : "light";
+                    })
+                  }
+                  className="relative p-3 rounded-sm bg-slate-100"
+                >
+                  {theme === "light" ? <Moon size={16} /> : <Sun size={16} />}
+                </button>
               </div>
               <Link to={"/login"}>
                 <Button type="secondary">Login</Button>

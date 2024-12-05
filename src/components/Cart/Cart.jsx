@@ -6,9 +6,12 @@ import {
   decreaseQuantity,
 } from "../../store/slices/cartSlices";
 import { useSelector } from "react-redux";
+import { useContext } from "react";
+import { ThemeContext } from "../../context/ThemeContext";
 
 export default function Cart() {
   const cart = useSelector((state) => state.cart);
+  const { theme, setTheme } = useContext(ThemeContext);
   const dispatch = useDispatch();
   return (
     <div className="w-full p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
