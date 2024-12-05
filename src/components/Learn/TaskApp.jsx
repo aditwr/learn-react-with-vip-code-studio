@@ -1,11 +1,12 @@
 import { useState, useEffect, useReducer } from "react";
 import PropTypes from "prop-types";
 import { Trash2, Pencil } from "lucide-react";
+import { useImmerReducer } from "use-immer";
 
 // TASK_APP COMPONENT
 export default function TaskApp() {
   // const [tasks, setTasks] = useState(initialTasks);
-  const [tasks, dispatch] = useReducer(tasksReducer, initialTasks);
+  const [tasks, dispatch] = useImmerReducer(tasksImmerReducer, initialTasks);
 
   function handleAddTask(taskText) {
     dispatch({
@@ -46,6 +47,32 @@ export default function TaskApp() {
       />
     </div>
   );
+}
+
+function tasksImmerReducer(draft = [], action) {
+  switch (action.type) {
+    case "ADD_TASK": {
+      draft.push({
+        id: action.payload.taskId,
+        text: action.payload.taskText,
+        completed: false,
+      });
+      break;
+    }
+    case "CHANGE_TASK": {
+      const taskIndex = draft.findIndex(
+        (task) => task.id === action.payload.id
+      );
+      draft[taskIndex] = action.payload;
+      break;
+    }
+    case "DELETE_TASK": {
+      return draft.filter((task) => task.id !== action.payload.taskId);
+    }
+    default: {
+      throw Error("Unknown action type: ", action.type);
+    }
+  }
 }
 
 function tasksReducer(tasks, action) {
