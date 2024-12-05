@@ -10,7 +10,7 @@ ThemeProvider.propTypes = {
   children: PropTypes.node.isRequired,
 };
 export function ThemeProvider({ children }) {
-  const [theme, setTheme] = useState("dark");
+  const [theme, setTheme] = useState("light");
 
   return (
     <ThemeContext.Provider value={{ theme, setTheme }}>
